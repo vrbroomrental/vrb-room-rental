@@ -613,7 +613,8 @@ body.lb-open{overflow:hidden;}
 
 /* each hero element enters on its own beat. Pure CSS with backwards fill, so it
    runs even if JS never does — the hero must never depend on a script. */
-.hero__txt > *{animation:heroIn .9s cubic-bezier(.22,.9,.24,1) backwards;
+/* h1 is excluded — its two lines animate individually below */
+.hero__txt > *:not(h1){animation:heroIn .9s cubic-bezier(.22,.9,.24,1) backwards;
   animation-delay:calc(.15s + var(--i,0) * .12s);}
 .hero h1 .ln{display:block;animation:heroIn 1s cubic-bezier(.22,.9,.24,1) backwards;}
 .hero h1 .ln:nth-child(1){animation-delay:.27s;}
