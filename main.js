@@ -125,15 +125,28 @@ var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var rv = [].slice.call(document.querySelectorAll('.rv'));
 function revealAll() { rv.forEach(function (el) { el.classList.add('in'); }); }
 
-if (reduced || !('IntersectionObserver' in window) || document.hidden) {
+/* Only catch up sections that are actually on screen. Revealing everything on a
+   timer meant each section had already animated by the time you scrolled to it,
+   so the entrances were never seen. */
+function revealVisible() {
+  rv.forEach(function (el) {
+    var r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.9 && r.bottom > 0) el.classList.add('in');
+  });
+}
+
+if (reduced || !('IntersectionObserver' in window)) {
   revealAll();
 } else {
   var rio = new IntersectionObserver(function (en) {
     en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } });
-  }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
   rv.forEach(function (el) { rio.observe(el); });
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) revealAll(); });
-  setTimeout(revealAll, 2500);
+
+  // a tab that loaded hidden gets no callbacks; catch up what is on screen once
+  // it is looked at, and let the observer handle everything below the fold
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) revealVisible(); });
+  if (document.hidden) revealVisible(); else setTimeout(revealVisible, 2500);
 }
 
 /* ── Reviews rail ──────────────────────────────────────────────────────────
