@@ -196,9 +196,15 @@ if (reduced || !('IntersectionObserver' in window)) {
   // takes so the browser does not re-snap and stutter mid-momentum.
   function recentre() {
     if (looping || !setW) return;
+    // Hold the scroll position within half a set of the middle of the track.
+    // Anchoring to HOME*setW left the runway lopsided — 5185px to the right but
+    // only 2547px to the left — which is why the left wall arrived first.
+    // Measuring from the true midpoint keeps both sides equal and maximal.
+    var mid = (rail.scrollWidth - rail.clientWidth) / 2;
+    var drift = rail.scrollLeft - mid;
     var shift = 0;
-    if (rail.scrollLeft < setW * (HOME - 1)) shift = setW;
-    else if (rail.scrollLeft > setW * (HOME + 1)) shift = -setW;
+    if (drift > setW / 2) shift = -setW;
+    else if (drift < -setW / 2) shift = setW;
     if (!shift) return;
     looping = true;
     var prev = rail.style.scrollSnapType;
