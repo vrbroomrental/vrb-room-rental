@@ -553,3 +553,52 @@ body.lb-open{overflow:hidden;}
   .doorgrid{grid-template-columns:1fr;}
   .doorgrid__ph .shot__f{aspect-ratio:4/3;}
 }
+
+/* ═══════════════ LOGO REVEAL ═══════════════
+   Adapted from the logo-reveal study. That version loops every 9s; here it
+   plays once when the section scrolls into view and settles, so it introduces
+   the promise rather than competing with it for attention. Easing curves and
+   proportions are kept from the original. */
+.logostage{position:relative;display:grid;place-items:center;
+  width:clamp(150px,22vw,210px);aspect-ratio:1;}
+.logostage__mark{width:46%;height:auto;position:relative;z-index:1;
+  opacity:0;clip-path:inset(0 0 100% 0);transform:scale(1.08);}
+.logostage__glow{position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(226,181,74,.30) 0%,rgba(226,181,74,.10) 38%,rgba(226,181,74,0) 68%);
+  opacity:0;transform:scale(.7);}
+.logostage__sweep{position:absolute;inset:-20% -60%;pointer-events:none;z-index:2;
+  background:linear-gradient(100deg,rgba(255,236,180,0) 42%,rgba(255,236,180,.34) 50%,rgba(255,236,180,0) 58%);
+  mix-blend-mode:screen;opacity:0;transform:translateX(-130%);}
+
+.creed.in .logostage__mark{animation:vrbReveal 1.5s cubic-bezier(.22,.9,.24,1) forwards;}
+.creed.in .logostage__glow{animation:vrbGlow 2.6s ease-in-out .15s forwards;}
+.creed.in .logostage__sweep{animation:vrbSweep 1.7s cubic-bezier(.4,0,.2,1) .45s forwards;}
+.creed.in .rule{animation:vrbRule 1s ease-out .5s backwards;transform-origin:left center;}
+
+@keyframes vrbReveal{
+  0%   {clip-path:inset(0 0 100% 0);opacity:0;transform:scale(1.08);}
+  18%  {opacity:1;}
+  100% {clip-path:inset(0 0 0 0);opacity:1;transform:scale(1);}
+}
+@keyframes vrbGlow{
+  0%   {opacity:0;transform:scale(.7);}
+  55%  {opacity:.9;transform:scale(1);}
+  78%  {opacity:.55;transform:scale(.96);}
+  100% {opacity:.7;transform:scale(1);}
+}
+@keyframes vrbSweep{
+  0%   {transform:translateX(-130%);opacity:0;}
+  12%  {opacity:1;}
+  88%  {opacity:1;}
+  100% {transform:translateX(130%);opacity:0;}
+}
+@keyframes vrbRule{
+  0%   {transform:scaleX(0);opacity:0;}
+  100% {transform:scaleX(1);opacity:1;}
+}
+@media (prefers-reduced-motion:reduce){
+  .creed.in .logostage__mark,.creed.in .logostage__glow,
+  .creed.in .logostage__sweep,.creed.in .rule{animation:none;}
+  .logostage__mark{opacity:1;clip-path:none;transform:none;}
+  .logostage__glow{opacity:.7;transform:none;}
+}
