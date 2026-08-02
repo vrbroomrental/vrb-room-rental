@@ -197,8 +197,8 @@ if (reduced || !('IntersectionObserver' in window)) {
   function recentre() {
     if (looping || !setW) return;
     var shift = 0;
-    if (rail.scrollLeft < setW * (HOME - 0.5)) shift = setW;
-    else if (rail.scrollLeft > setW * (HOME + 0.5)) shift = -setW;
+    if (rail.scrollLeft < setW * (HOME - 1)) shift = setW;
+    else if (rail.scrollLeft > setW * (HOME + 1)) shift = -setW;
     if (!shift) return;
     looping = true;
     var prev = rail.style.scrollSnapType;
@@ -209,6 +209,8 @@ if (reduced || !('IntersectionObserver' in window)) {
     looping = false;
   }
   function sync() {
+    // wrap continuously while the visitor drives, but never mid-animation
+    if (!animating) recentre();
     var active = centreIndex();
     for (var i = 0; i < cards.length; i++) cards[i].classList.toggle('is-active', i === active);
     if (dots) {
@@ -218,10 +220,19 @@ if (reduced || !('IntersectionObserver' in window)) {
       }
     }
   }
+  var animating = false, animTimer = null;
   function goTo(i, behavior) {
     var rr = rail.getBoundingClientRect(), cr = cards[i].getBoundingClientRect();
+    var mode = behavior || 'smooth';
+    if (mode === 'smooth') {
+      // a wrap during this would teleport the rail out from under the browser's
+      // own animation, which is what left cards off-centre
+      animating = true;
+      clearTimeout(animTimer);
+      animTimer = setTimeout(function () { animating = false; }, 700);
+    }
     rail.scrollTo({ left: rail.scrollLeft + (cr.left + cr.width / 2) - (rr.left + rr.width / 2),
-                    behavior: behavior || 'smooth' });
+                    behavior: mode });
   }
 
   var dots = null;
