@@ -229,7 +229,7 @@ if (reduced || !('IntersectionObserver' in window)) {
       // own animation, which is what left cards off-centre
       animating = true;
       clearTimeout(animTimer);
-      animTimer = setTimeout(function () { animating = false; }, 700);
+      animTimer = setTimeout(function () { animating = false; }, 900);
     }
     rail.scrollTo({ left: rail.scrollLeft + (cr.left + cr.width / 2) - (rr.left + rr.width / 2),
                     behavior: mode });
@@ -287,6 +287,21 @@ if (reduced || !('IntersectionObserver' in window)) {
       if (!paused && Date.now() >= userUntil - 1500) recentre();
     }, 120);
   }, { passive: true });
+
+  // scrollend fires the moment a scroll truly settles; far more reliable than
+  // guessing how long the browser's smooth scroll will take
+  if ('onscrollend' in window) {
+    rail.addEventListener('scrollend', function () {
+      animating = false;
+      clearTimeout(animTimer);
+      recentre();
+    });
+  }
+
+  // Position-driven safety net. Scroll events alone proved missable during a
+  // hard fling, letting the rail reach a real end; this pulls it back into the
+  // home band within a quarter second no matter how fast the visitor scrolls.
+  setInterval(function () { if (!animating) recentre(); }, 250);
 
   measure();
   goTo(n * HOME, 'instant');   // park on the first card of the middle copy
