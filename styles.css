@@ -536,7 +536,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .lb__close svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;}
 .lb__close:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px;}
 body.lb-open{overflow:hidden;}
-/* the three objections that stall an enquiry, answered before they are asked */
+/* the three objections that stall an inquiry, answered before they are asked */
 .hero__easy{font-size:.78rem;line-height:1.6;color:var(--dark-mute);margin:.2rem 0 0;}
 .hero__easy strong{color:var(--dark-fg);font-weight:600;}
 
