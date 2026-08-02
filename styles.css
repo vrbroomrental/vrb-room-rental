@@ -483,8 +483,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .cookie .btn{padding:.75em 1.4em;font-size:.7rem;min-height:44px;}
 .cookie .btn--fill{background:var(--dark-gold);border-color:var(--dark-gold);color:var(--dark);}
 .cookie .btn--fill:hover{background:transparent;color:var(--dark-gold);}
-.cookie .btn--line{border-color:rgba(244,238,224,.35);color:var(--dark-fg);}
-.cookie .btn--line:hover{background:var(--dark-fg);color:var(--dark);}
+/* Decline stays quiet — no hover fill, no transition — so Accept carries the
+   visual weight. It keeps a full-size hit area and legible contrast, which is
+   what stops this being a dark pattern rather than emphasis. */
+.cookie .btn--line{border-color:rgba(244,238,224,.28);color:var(--dark-mute);
+  transition:none;}
+.cookie .btn--line:hover,.cookie .btn--line:focus-visible{
+  background:transparent;color:var(--dark-mute);border-color:rgba(244,238,224,.28);}
 
 @media (max-width:900px){
   .cookie p{flex:1 1 100%;}
