@@ -1,0 +1,9 @@
+# Staging / A-B test host — new.vrbroomrental.com
+# This is a full duplicate of the production site. Keeping it out of the index
+# stops Google treating it as duplicate content and splitting ranking signals.
+#
+# DELETE THIS FILE when this site is promoted to vrbroomrental.com.
+User-agent: *
+Disallow: /
+
+Sitemap: https://vrbroomrental.com/sitemap.xml
