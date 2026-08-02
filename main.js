@@ -298,10 +298,27 @@ if (reduced || !('IntersectionObserver' in window)) {
     });
   }
 
-  // Position-driven safety net. Scroll events alone proved missable during a
-  // hard fling, letting the rail reach a real end; this pulls it back into the
-  // home band within a quarter second no matter how fast the visitor scrolls.
-  setInterval(function () { if (!animating) recentre(); }, 250);
+  // Per-frame watchdog. A timer was too coarse: at 250ms a hard fling travels
+  // thousands of pixels between checks, so the rail reached the physical end,
+  // momentum died against it, and the correction only landed afterwards — the
+  // "hit a barrier, then it jumps" feel. Checking every frame keeps the wrap
+  // ahead of the scroll, so the end is never reachable. Runs only while the
+  // rail is on screen.
+  var rafId = null;
+  function watch() {
+    if (!animating) recentre();
+    rafId = requestAnimationFrame(watch);
+  }
+  function startWatch() { if (rafId === null) rafId = requestAnimationFrame(watch); }
+  function stopWatch() { if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) {
+      en[0].isIntersecting ? startWatch() : stopWatch();
+    }, { rootMargin: '200px 0px' }).observe(rail);
+  } else {
+    startWatch();
+  }
 
   measure();
   goTo(n * HOME, 'instant');   // park on the first card of the middle copy
