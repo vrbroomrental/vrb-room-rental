@@ -28,20 +28,15 @@ Rental long-stay residence in Paco, Manila.
    ```
 4. On GitHub: **Settings → Pages → Build and deployment → Source** =
    "Deploy from a branch", **Branch** = `main` / `/(root)`. Save.
-5. Custom domain: the `CNAME` file in this repo currently claims
-   **`new.vrbroomrental.com`**, a staging host used to A/B test against the
-   old site still living on the apex. At your DNS provider add one record:
+5. Custom domain: the `CNAME` file claims **`vrbroomrental.com`**. At your DNS
+   provider (Cloudflare) point the apex at GitHub Pages — with CNAME
+   flattening you can use a single record:
 
-   | Type    | Name  | Value                      |
-   |---------|-------|----------------------------|
-   | `CNAME` | `new` | `vrbroomrental.github.io`  |
+   | Type    | Name | Target                     | Proxy    |
+   |---------|------|----------------------------|----------|
+   | `CNAME` | `@`  | `vrbroomrental.github.io`  | Proxied  |
 
-   This does not touch `vrbroomrental.com`, so the existing site keeps
-   serving untouched.
-
-   **Promoting to the apex later:** change the `CNAME` file to
-   `vrbroomrental.com`, **delete `robots.txt`** (see below), then swap DNS to
-   four `A` records on the apex — `185.199.108.153`, `185.199.109.153`,
+   Or four `A` records on the apex: `185.199.108.153`, `185.199.109.153`,
    `185.199.110.153`, `185.199.111.153`.
 
 6. Wait a few minutes for DNS + GitHub's certificate to provision, then
