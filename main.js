@@ -209,7 +209,6 @@ if (reduced || !('IntersectionObserver' in window)) {
     looping = false;
   }
   function sync() {
-    recentre();
     var active = centreIndex();
     for (var i = 0; i < cards.length; i++) cards[i].classList.toggle('is-active', i === active);
     if (dots) {
@@ -255,10 +254,23 @@ if (reduced || !('IntersectionObserver' in window)) {
     rail.addEventListener(ev, function () { paused = false; }, { passive: true });
   });
 
+  // Wrap while the rail is stationary, never during a smooth scroll: shifting
+  // scrollLeft mid-animation leaves the browser animating toward the old
+  // absolute target, which lands the card off-centre.
   function advance() {
     if (paused || looping || Date.now() < userUntil) return;
+    recentre();
     goTo(centreIndex() + 1);
   }
+
+  // user-driven scrolling wraps once it settles
+  var settle = null;
+  rail.addEventListener('scroll', function () {
+    clearTimeout(settle);
+    settle = setTimeout(function () {
+      if (!paused && Date.now() >= userUntil - 1500) recentre();
+    }, 120);
+  }, { passive: true });
 
   measure();
   goTo(n * HOME, 'instant');   // park on the first card of the middle copy
