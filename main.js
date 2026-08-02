@@ -253,9 +253,14 @@ if (reduced || !('IntersectionObserver' in window)) {
   rail.addEventListener('scroll', sync, { passive: true });
 
   // treat any recent wheel/touch as "the visitor is driving" and hold off
+  // while the visitor is scrolling the rail, auto-advance stands down and only
+  // resumes once they have been still for five seconds
   var userUntil = 0;
-  ['wheel', 'touchmove', 'pointerdown'].forEach(function (ev) {
-    rail.addEventListener(ev, function () { userUntil = Date.now() + 1600; }, { passive: true });
+  ['wheel', 'touchmove', 'pointerdown', 'scroll'].forEach(function (ev) {
+    rail.addEventListener(ev, function (e) {
+      if (e.type === 'scroll' && animating) return;   // our own smooth scroll
+      userUntil = Date.now() + 5000;
+    }, { passive: true });
   });
   window.addEventListener('resize', function () { measure(); goTo(n * HOME, 'instant'); sync(); });
   ['pointerenter', 'focusin', 'touchstart'].forEach(function (ev) {
