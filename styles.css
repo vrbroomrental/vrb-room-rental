@@ -680,3 +680,6 @@ body.lb-open{overflow:hidden;}
   .map__bar{justify-content:stretch!important;}
   .map__bar .btn--map{flex:1 1 auto;}
 }
+/* nominative-use notice for the third-party marks on the site */
+.ft__legal{flex:1 1 100%;font-size:.68rem;line-height:1.6;color:var(--dark-mute);
+  opacity:.75;max-width:80ch;}
