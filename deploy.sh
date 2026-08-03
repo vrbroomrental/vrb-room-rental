@@ -11,7 +11,8 @@ cd "$(dirname "$0")"
 css=$(md5 -q styles.css | cut -c1-8)
 js=$(md5 -q main.js | cut -c1-8)
 
-for f in index.html gallery.html contact.html; do
+# every top-level page, so a newly added one can never ship unstamped
+for f in *.html; do
   perl -pi -e "s{href=\"styles\.css(\?v=[0-9a-f]+)?\"}{href=\"styles.css?v=$css\"}g" "$f"
   perl -pi -e "s{src=\"main\.js(\?v=[0-9a-f]+)?\"}{src=\"main.js?v=$js\"}g" "$f"
 done
