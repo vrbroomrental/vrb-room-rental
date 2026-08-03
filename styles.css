@@ -655,3 +655,10 @@ body.lb-open{overflow:hidden;}
 .smnote a{color:var(--gold);}
 .ft__bot a{color:var(--dark-mute);text-underline-offset:3px;}
 .ft__bot a:hover{color:var(--dark-gold);}
+
+/* Third-party ride logos: shown unaltered as the brands publish them, so the
+   button gives them room rather than forcing them to the text metrics. */
+.btn--brand{padding:.55em 1.1em;min-height:48px;}
+.btn--brand img{display:block;width:auto;}
+.btn--brand img[alt="Grab"]{height:23px;}
+.btn--brand img[alt="Move It"]{height:28px;}
