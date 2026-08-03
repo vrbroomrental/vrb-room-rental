@@ -497,12 +497,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   .cookie__btns .btn{flex:1 1 auto;}
 }
 @media (max-width:760px){
-  .cookie{bottom:4.6rem;max-height:78vh;}
-  .cookie__opts li{gap:1rem;}
+  /* One bar at a time: the notice sits on the bottom edge and the action bar
+     stands down until a choice is made. Stacking both ate 40% of a phone. */
+  .cookie{bottom:0;max-height:70vh;padding-block:.85rem;}
+  .cookie.show ~ .bar{transform:translateY(120%);}
+  .cookie p{font-size:.8rem;line-height:1.5;}
+  .cookie__in{gap:.75rem 1rem;}
+  .cookie__btns{gap:.5rem;}
 }
 @media (max-width:460px){
-  .cookie .btn{flex:1 1 100%;}
-  .cookie__opts span{font-size:.74rem;}
+  /* side by side — both labels are short, and stacking cost another row */
+  .cookie .btn{flex:1 1 auto;padding-inline:1rem;}
 }
 /* consent gate inside the map placeholder */
 .map__ph .btn{margin-top:.3rem;}
