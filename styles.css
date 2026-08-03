@@ -667,3 +667,14 @@ body.lb-open{overflow:hidden;}
 .btn--brand img{display:block;width:auto;}
 .btn--brand img[alt="Grab"]{height:23px;}
 .btn--brand img[alt="Move It"]{height:28px;}
+
+/* map service buttons — official marks, unaltered; the Waze app icon carries
+   its own cyan tile, so it is rounded here rather than in the asset */
+.btn--map{gap:.5em;padding-inline:1.15em;}
+.btn--map img{width:20px;height:20px;display:block;flex:none;}
+.btn--map img.rnd{border-radius:5px;}
+.map__bar{gap:.6rem;flex-wrap:wrap;}
+@media (max-width:460px){
+  .map__bar{justify-content:stretch!important;}
+  .map__bar .btn--map{flex:1 1 auto;}
+}
