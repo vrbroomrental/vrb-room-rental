@@ -456,9 +456,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .cline--light strong{color:var(--mute);}
 .cline--light a,.cline--light address{color:var(--ink);}
 .cline--light a:hover{color:var(--gold);}
-.door--light{border-left:2px solid var(--gold);padding:.65rem 0 .65rem 1.2rem;
+.door--light{border-left:2px solid var(--gold);padding:.7rem 0 .7rem 1.3rem;
   font-family:var(--serif);font-size:1.1rem;line-height:1.6;color:var(--ink);}
-.door--light em{display:block;font-size:.95rem;color:var(--mute);margin-top:.25rem;}
+/* the Tagalog line is the landmark most people will actually go by */
+.door--light em{display:block;font-size:clamp(1.15rem,2.2vw,1.4rem);line-height:1.45;
+  color:var(--ink);font-style:italic;}
 .map--light{background:var(--paper-2);border-color:var(--line);}
 .map--light .map__ph{color:var(--mute);}
 .map--light .map__ph b{color:var(--ink);}
