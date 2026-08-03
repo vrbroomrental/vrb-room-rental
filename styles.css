@@ -685,7 +685,9 @@ body.lb-open{overflow:hidden;}
   opacity:.75;max-width:80ch;}
 
 /* ── long-form legal / prose pages ── */
-.prose{max-width:70ch;}
+/* ~72 characters of body text — the comfortable reading measure. ch units key
+   off the '0' glyph, which is wider than average here, so 58ch lands right. */
+.prose{max-width:58ch;}
 
 /* Each part reads as its own block: a bold sans heading against the serif body,
    with the rule and the space above it doing the separating. */
@@ -696,6 +698,12 @@ body.lb-open{overflow:hidden;}
   margin:3rem 0 1rem;padding-top:1.6rem;border-top:1px solid var(--line);
 }
 .prose h2:first-of-type{margin-top:1.2rem;padding-top:0;border-top:0;}
+/* sub-headings sit inside a section: no rule, less air, still clearly a step down */
+.prose h3{font-family:var(--sans);font-weight:650;
+  font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--gold-strong,var(--gold));margin:1.9rem 0 .6rem;}
+.prose h2 + p,.prose h3 + p{margin-top:0;}
+.prose h3 + ul{margin-top:.2rem;}
 .prose p{color:var(--ink-2);line-height:1.75;margin:0 0 1.15rem;}
 .prose p:last-child{margin-bottom:0;}
 .prose ul{margin:0 0 1.35rem;padding-left:1.15rem;display:grid;gap:.8rem;}
