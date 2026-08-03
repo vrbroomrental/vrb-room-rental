@@ -685,9 +685,10 @@ body.lb-open{overflow:hidden;}
   opacity:.75;max-width:80ch;}
 
 /* ── long-form legal / prose pages ── */
-/* ~72 characters of body text — the comfortable reading measure. ch units key
-   off the '0' glyph, which is wider than average here, so 58ch lands right. */
-.prose{max-width:58ch;}
+/* ~70 characters of body text — the comfortable reading measure. Set in rem
+   rather than ch: the ch unit keys off the '0' glyph, which in this face is
+   ~12px against a ~7.5px average, so a ch-based width overshoots badly. */
+.prose{max-width:39rem;}
 
 /* Each part reads as its own block: a bold sans heading against the serif body,
    with the rule and the space above it doing the separating. */
