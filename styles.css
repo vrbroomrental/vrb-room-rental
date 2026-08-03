@@ -683,3 +683,17 @@ body.lb-open{overflow:hidden;}
 /* nominative-use notice for the third-party marks on the site */
 .ft__legal{flex:1 1 100%;font-size:.68rem;line-height:1.6;color:var(--dark-mute);
   opacity:.75;max-width:80ch;}
+
+/* ── long-form legal / prose pages ── */
+.prose{max-width:68ch;}
+.prose h2{font-size:clamp(1.2rem,2.2vw,1.45rem);margin:2.2rem 0 .7rem;
+  padding-top:1.4rem;border-top:1px solid var(--line);}
+.prose h2:first-of-type{margin-top:.5rem;padding-top:0;border-top:0;}
+.prose p{color:var(--ink-2);margin-bottom:.9rem;}
+.prose ul{margin:0 0 1.2rem;padding-left:1.1rem;display:grid;gap:.55rem;}
+.prose li{color:var(--ink-2);line-height:1.65;}
+.prose strong{color:var(--ink);font-weight:650;}
+.prose a{color:var(--gold);text-underline-offset:3px;}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:.1em .35em;}
+.prose__meta{font-size:.78rem;letter-spacing:.04em;color:var(--mute);}
